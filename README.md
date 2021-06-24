@@ -93,6 +93,22 @@ Steps:
   }
 }
 ```  
+**_Notes:_**
+
+"Token" is a custom created token to secure API requests
+
+"LogDir" is the folder path for Rasa service logs
+
+"PythonPath" is the folder path for custom python modules (to be used by Rasa NLP)
+
+For every Rasa version:
+
+  "Version" is the version of Rasa installed (to be shown on Qbox)
+  
+  "RasaDir" is the folder path for Rasa binaries, including virtual environment/bin
+  
+  "ModelDir" is the folder path where to store Rasa models
+  
 
 - Use systemd and create a service file  
   systemd is an init system that provides many powerful features for starting, stopping, and managing processes. 
@@ -121,37 +137,21 @@ WantedBy=multi-user.target
 ```
   - replace "[api folder]" witht eh folder name where you extracted the zip archive 
  
-Enable KESTREL service 
-
+- Enable KESTREL service 
+```
 systemctl enable kestrel-volume-rasa-api.service 
-
 systemctl restart kestrel-volume-rasa-api.service 
-
 systemctl status kestrel-volume-rasa-api.service 
-to check if there is any error on Kestrel service 
+```
+  to check if there is any error on Kestrel service 
  
-
-Copy the Volume Rasa API source code on the server 
-
-(using WinSCP) create a folder on the server in “tmp” 
-
-Upload all source code files to the new tmp folder 
-
-Edit appSettings.json and Startup.cs to use: 
-
- 
-
-TO BE COMPLETED 
-
- 
-
 --------- REFERENCES ------------------ 
 
 Host ASP.NET Core api on Linux 
 
 https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-apache?view=aspnetcore-3.1  
 
-DotnetCore on Ubuntu 
+.NET Core on Ubuntu 
 
 https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#1804- 
 
