@@ -1,7 +1,7 @@
 # VolumeRasaApi
-.NET Core WebAPI to integrate Rasa NLP with QBox&trade;
+## .NET Core WebAPI to integrate Rasa NLP with QBox&trade;
 
-Steps: 
+### Steps: 
 
 - Check port 80 is open on VM, otherwise open it (IN and OUT bound) 
 - login 
@@ -92,8 +92,9 @@ Steps:
     }
   }
 }
-```  
-**_Notes:_**
+
+----------------------------------------------------------------------------------
+Notes:
 
 "Token" is a custom created token to secure API requests
 
@@ -108,7 +109,8 @@ For every Rasa version:
   "RasaDir" is the folder path for Rasa binaries, including virtual environment/bin
   
   "ModelDir" is the folder path where to store Rasa models
-  
+
+```    
 
 - Use systemd and create a service file  
   systemd is an init system that provides many powerful features for starting, stopping, and managing processes. 
