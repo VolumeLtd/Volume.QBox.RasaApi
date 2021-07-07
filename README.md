@@ -47,7 +47,7 @@
 - Reload apache 
     systemctl restart apache2 
     
-- Extract "Volume_QBox_RasaApi_X-Y-Z.zip" into a new folder (i.e. "volume-rasa-api") inside "/var/www"
+- Extract [Volume_QBox_RasaApi_X-Y-Z.zip](//github.com/VolumeLtd/Volume.QBox.RasaApi/releases/latest) into a new folder (i.e. "volume-rasa-api") inside "/var/www"
 
 - Edit the extracted "appsettings.json" file 
 ```
