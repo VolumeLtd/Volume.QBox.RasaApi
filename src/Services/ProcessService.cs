@@ -160,18 +160,6 @@ namespace Volume.QBox.RasaApi.Services
             return _processes.ContainsKey(GetProcessName(version, modelName, action));
         }
 
-        public void CreateFoldersAndFiles(string modelDirectory, string config, string nlu)
-        {
-            if (!Directory.Exists(modelDirectory))
-            {
-                Directory.CreateDirectory(modelDirectory);
-                Directory.CreateDirectory($"{modelDirectory}/data");
-            }
-
-            File.WriteAllText($"{modelDirectory}/config.yml", config);
-            File.WriteAllText($"{modelDirectory}/data/nlu.md", nlu);
-        }
-
         public void CreateFoldersAndFiles(string modelDirectory, IFormFile zip)
         {
             if (!Directory.Exists(modelDirectory))

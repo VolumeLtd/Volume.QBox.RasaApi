@@ -42,62 +42,7 @@ namespace Volume.QBox.RasaApi.Controllers
 
         [HttpPost]
         [Route("Train")]
-        public IActionResult Train(RasaModel model)
-        {
-            try
-            {
-                if (model == null)
-                {
-                    return BadRequest("Parameter model missing");
-                }
-
-                _processService.ActiveVersion = model.Version;
-
-                _logger.LogDebug("Version {ActiveVersion} started training {ModelName}", _processService.ActiveVersion, model.ModelName);
-
-                bool finishedTraining = false;
-
-                if (!IsValidToken(model.Token))
-                {
-                    return Unauthorized();
-                }
-
-                RasaVersionModel rasaVersion = _processService.GetRasaVersionModel(_processService.ActiveVersion);
-                string modelDirectory = rasaVersion.ModelDir + model.ModelName + "/";
-
-                _logger.LogDebug("About to create folder {ModelDirectory} and copy files", modelDirectory);
-
-                _processService.CreateFoldersAndFiles(modelDirectory, model.Config, model.Nlu);
-
-                RasaProcess rasaProcess = _processService.CreateProcess(_processService.ActiveVersion, model.ModelName, RASA_ACTION_TRAIN);
-
-                rasaProcess.ProcessInstance.ErrorDataReceived += (object sender, DataReceivedEventArgs args) =>
-                {
-                    HandleError(args.Data, modelDirectory, ref finishedTraining);
-                };
-
-                SetModelStatus("Training", modelDirectory);
-                var watch = Stopwatch.StartNew();
-
-                //When the process stops, clean up and write the status to the status file                
-                rasaProcess.ProcessInstance.Exited += (object sender, EventArgs e) =>
-                {
-                    FinishedTraining(rasaProcess, modelDirectory, watch, finishedTraining);
-                };
-
-                return Ok("Started");
-            }
-            catch (Exception x)
-            {
-                _logger.LogError(x, "Training failed for {ModelName} on version {Version}", model.ModelName, model.Version);
-                _processService.RemoveProcess(model.Version, model.ModelName, RASA_ACTION_TRAIN);
-                return StatusCode(StatusCodes.Status500InternalServerError, x.Message);
-            }
-        }
-
-        [HttpPost]
-        [Route("TrainZip")]
-        public IActionResult TrainZip([FromForm] RasaZipModel model)
+        public IActionResult Train([FromForm] RasaModel model)
         {
             try
             {

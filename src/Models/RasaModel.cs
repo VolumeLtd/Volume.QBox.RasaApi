@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Volume.QBox.RasaApi.Models
 {
     public class RasaModel
@@ -6,9 +8,7 @@ namespace Volume.QBox.RasaApi.Models
 
         public string ModelName { get; set; }
 
-        public string Config { get; set; }
-
-        public string Nlu { get; set; }
+        public IFormFile Zip { get; set; }
 
         public bool Force { get; set; }
 

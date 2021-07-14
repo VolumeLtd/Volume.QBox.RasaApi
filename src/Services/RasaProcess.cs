@@ -47,7 +47,7 @@ namespace Volume.QBox.RasaApi.Services
             var startInfo = new ProcessStartInfo();
             string modelDir = modelDirectory + modelName;
 
-            startInfo.WorkingDirectory = rasaDirectory;
+            startInfo.WorkingDirectory = modelDir;
             startInfo.EnvironmentVariables["CURRENTMODELPATH"] = modelDir;
             startInfo.EnvironmentVariables["PYTHONPATH"] = pythonPath;
             startInfo.FileName = $"{rasaDirectory}rasa";

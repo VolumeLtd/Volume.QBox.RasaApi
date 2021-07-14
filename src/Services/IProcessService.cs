@@ -18,8 +18,6 @@ namespace Volume.QBox.RasaApi.Interfaces
 
         bool HasProcess(string version, string modelName, string action);
 
-        void CreateFoldersAndFiles(string modelDirectory, string config, string nlu);
-
         void CreateFoldersAndFiles(string modelDirectory, IFormFile zip);
 
         int NumberOfProcesses();
