@@ -20,7 +20,6 @@ namespace Volume.QBox.RasaApi.Services
         private ConcurrentDictionary<string, RasaProcess> _processes = new ConcurrentDictionary<string, RasaProcess>();
         private int _predictionTimeout;
         private int _processTimeout;
-        private string _pythonPath;
         private const int PAUSE_IN_MS = 250;
         private int gpu = 1;
         public string ActiveVersion { get; set; }
@@ -38,8 +37,7 @@ namespace Volume.QBox.RasaApi.Services
             _serviceProvider = serviceProvider;
             _processTimeout = configuration.GetValue<int>("AppSettings:ProcessTimeout");
             _predictionTimeout = configuration.GetValue<int>("AppSettings:PredictionTimeout");
-            _pythonPath = configuration.GetValue<string>("AppSettings:PythonPath");
-            _logger?.LogDebug("Process initiated {processTimeout} {predictionTimeout} {pythonPath}", _processTimeout, _predictionTimeout, _pythonPath);
+            _logger?.LogDebug("Process initiated {processTimeout} {predictionTimeout}", _processTimeout, _predictionTimeout);
         }
 
         public void StartProcess(string version, string modelName, string action, out bool newProcess)
@@ -88,7 +86,7 @@ namespace Volume.QBox.RasaApi.Services
                 gpu = gpu == 0 ? 1 : 0;
             }
 
-            RasaProcess rasaProcess = new RasaProcess(rasaVersion.ModelDir, rasaVersion.RasaDir, version, modelName, gpu, action, _pythonPath, _predictionTimeout, (ILogger<RasaProcess>)_serviceProvider.GetService(typeof(ILogger<RasaProcess>)));
+            RasaProcess rasaProcess = new RasaProcess(rasaVersion.ModelDir, rasaVersion.RasaDir, version, modelName, gpu, action, _predictionTimeout, (ILogger<RasaProcess>)_serviceProvider.GetService(typeof(ILogger<RasaProcess>)));
             _processes.TryAdd(GetProcessName(version, modelName, action), rasaProcess);
 
             return rasaProcess;

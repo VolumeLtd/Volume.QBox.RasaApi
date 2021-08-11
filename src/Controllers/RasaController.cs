@@ -42,6 +42,7 @@ namespace Volume.QBox.RasaApi.Controllers
 
         [HttpPost]
         [Route("Train")]
+        [RequestSizeLimit(150_000_000)]
         public IActionResult Train([FromForm] RasaModel model)
         {
             try

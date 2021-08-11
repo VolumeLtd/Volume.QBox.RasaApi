@@ -26,7 +26,7 @@ namespace Volume.QBox.RasaApi.Services
 
 
         public RasaProcess(string modelDirectory, string rasaDirectory, string version, string modelName,
-                           int gpu, string action, string pythonPath, int predictionTimeout,
+                           int gpu, string action, int predictionTimeout,
                            ILogger<RasaProcess> logger)
         {
             Version = version;
@@ -37,10 +37,10 @@ namespace Volume.QBox.RasaApi.Services
             GPU = gpu;
             _logger = logger;
 
-            InitProcess(modelDirectory, rasaDirectory, modelName, gpu, action, pythonPath);
+            InitProcess(modelDirectory, rasaDirectory, modelName, gpu, action);
         }
 
-        private void InitProcess(string modelDirectory, string rasaDirectory, string modelName, int gpu, string action, string pythonPath)
+        private void InitProcess(string modelDirectory, string rasaDirectory, string modelName, int gpu, string action)
         {
             ProcessInstance = new Process();
             StartTime = DateTime.Now;
@@ -49,13 +49,11 @@ namespace Volume.QBox.RasaApi.Services
 
             startInfo.WorkingDirectory = modelDir;
             startInfo.EnvironmentVariables["CURRENTMODELPATH"] = modelDir;
-            startInfo.EnvironmentVariables["PYTHONPATH"] = pythonPath;
             startInfo.FileName = $"{rasaDirectory}rasa";
             startInfo.Arguments = GenerateArgumentForAction(action, modelDir, GetPort(gpu));
 
             _logger?.LogDebug("WorkingDirectory {workingDirectory}", startInfo.WorkingDirectory);
             _logger?.LogDebug("CurrentModelPath {currentModelPath}", startInfo.EnvironmentVariables["CURRENTMODELPATH"]);
-            _logger?.LogDebug("PythonPath {pythonPath}", startInfo.EnvironmentVariables["PYTHONPATH"]);
             _logger?.LogDebug("FileName {fileName}", startInfo.FileName);
             _logger?.LogDebug($"Arguments= {startInfo.Arguments}");
             _logger?.LogDebug($"Setting CUDA_VISIBLE_DEVICES TO GPU {gpu}");
